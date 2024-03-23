@@ -1,0 +1,24 @@
+{
+    "manifest_version": 3,
+    "name": "Manual Remediation Helper",
+    "version": "1.0",
+    "description": "Manual Remediation Helper. Autofill Automic Remediation, Add Hotkey, Scroll to new remediation file",
+    "permissions": ["activeTab"],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "icons": {
+        "16": "cloud.png",
+        "48": "cloud.png",
+        "128": "cloud.png"
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["content.js"]
+        }
+    ]
+}
