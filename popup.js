@@ -12,6 +12,8 @@ document.addEventListener("DOMContentLoaded", function () {
         );
     });
 
+
+    // testing 
     resetButton.addEventListener("click", function () {
         console.log("clicked reset button");
         chrome.tabs.query(
