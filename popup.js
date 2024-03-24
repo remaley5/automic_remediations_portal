@@ -7,9 +7,25 @@ document.addEventListener("DOMContentLoaded", function () {
     const title = document.getElementById("automic_name");
     const send_focus = document.getElementById("send_focus");
     const shortcut = document.getElementById("shortcut");
-
+    const toggle_instructions = document.getElementById("instructions");
+    
+    toggle_instructions.addEventListener("click", function() {
+        console.log('Clicked!!')
+        if(toggle_instructions.checked === true) {
+            document.querySelectorAll('.description').forEach(function(ele) {
+                ele.classList.remove('hidden')
+            });
+        } else {
+            document.querySelectorAll('.description').forEach(function(ele) {
+                ele.classList.add('hidden')
+            });
+        }
+    });
+    
+    // SET & RESET
     setButton.addEventListener("click", function () {
         console.log('Set: Clicked!');
+        // Apply setting to page
         chrome.tabs.query(
             { active: true, currentWindow: true },
             function (tabs) {
@@ -21,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             }
         );
+
     });
 
 

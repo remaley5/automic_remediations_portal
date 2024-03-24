@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <h1>Manual Remediation Helper Changes?</h1>
+    <h1>Add Remediation Helper</h1>
     <!-- 
     Features to add: 
     - Kaely's dark theme 
@@ -15,10 +15,22 @@
     - Toggle show/ hide directions
     - Make everything a toggle button
     -->
+    <!-- TOGGLE FORM INSTRUCTIONS -->
+    <div class="checkbox field">
+        <div class="label_cont">
+            <label for="instructions">Show Instructions</label>
+            <div class="description hidden" id="instructions_desc">Additional instructions for the purpose of each field is visible</div>
+        </div>
+        <div class="checkbox_cont">
+            <input type="checkbox" id="instructions" aria-describedby="instructions_desc">
+            <div class="checkbox_style"></div>
+        </div>
+    </div> 
+    <!-- AUTOMIC REMEDIAITON FILENAME -->
     <div class="text field">
         <div class="label_cont">
             <label for="automic_name">Filename Prefix</label>
-            <div class="description" id="automic_name_desc">Enter text here that will be automatically filled in as
+            <div class="description hidden" id="automic_name_desc">Enter text here that will be automatically filled in as
                 the beginning of the filename when you open the 'Add New Remediation' dialog. </div>
         </div>
         <input id="automic_name" aria-describedby="automic_name_desc">
@@ -27,7 +39,7 @@
     <div class="checkbox field">
         <div class="label_cont">
             <label for="send_focus">Auto-Scroll & Focus</label>
-            <div class="description" id="send_focus_desc">Enable this feature to automatically scroll to newly
+            <div class="description hidden" id="send_focus_desc">Enable this feature to automatically scroll to newly
                 saved files in the browser and direct keyboard focus to the accordion button which expands the
                 new file.</div>
         </div>
@@ -36,11 +48,11 @@
             <div class="checkbox_style"></div>
         </div>
     </div>
+    <!-- KEYBOARD SHORTCUT -->
     <div class="checkbox field">
-        <!-- KEYBOARD SHORTCUT -->
         <div class="label_cont">
             <label for="shortcut">Shortcut Key for New Remediation</label>
-            <div class="description" id="shortcut_desc">Enable this option to use the shortcut key Control +
+            <div class="description hidden" id="shortcut_desc">Enable this option to use the shortcut key Control +
                 Option + N to open the 'Add Manual Remediation' modal and create a new file.</div>
             </div>
             <div class="checkbox_cont">
@@ -55,3 +67,17 @@
 </body>
 
 </html>
+
+<!--  
+    CHECKBOX
+    <div class="checkbox field">
+        <div class="label_cont">
+            <label for=""></label>
+            <div class="description hidden" id=""></div>
+        </div>
+        <div class="checkbox_cont">
+            <input type="checkbox" id="" aria-describedby="">
+            <div class="checkbox_style"></div>
+        </div>
+    </div> 
+-->
