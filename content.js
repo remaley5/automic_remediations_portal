@@ -17,18 +17,18 @@ const sendFocus = function () {
     let manualRemsLength = document.querySelectorAll('table[data-cy="manualRemTable"] tr').length;
     document.querySelector('[data-cy="createManualRemModal"] button[data-cy="submitButton"]').addEventListener("click", function () {
         let cnt = 0;
-        let interval = setInterval(function () {
+        let findNewRem = setInterval(function () {
             let newRem = document.querySelectorAll('table[data-cy="manualRemTable"] tr')[manualRemsLength];
             if (newRem != undefined) {
+                clearInterval(findNewRem);
                 newRem.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
                 newRem.setAttribute('tabindex', '0');
                 newRem.focus();
-                clearInterval(interval);
             }
 
             if (cnt > 20) {
                 console.log("Couldn't send focus :(");
-                clearInterval(interval);
+                clearInterval(findNewRem);
             }
             cnt++;
         }, 100)
@@ -43,15 +43,30 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     // -----------------------------------------x----------------------------------------------------------
     // "Add Manual Remediation" Modal opens
     let openManualRem = function () {
-        setTimeout(function () {
-            document.querySelector('[data-cy="createManualRemModal"] input#field-name')
-                .value = request.title;
-            document.querySelector('[data-cy="createManualRemModal"] input#field-name').focus();
-
-            if (request.send_focus === true) {
-                sendFocus();
+        let cnt;
+        let findModal = setInterval(function() {
+            let input = document.querySelector('[data-cy="createManualRemModal"] input#field-name');
+            if(input != undefined) {
+                clearInterval(findModal);
+                input.value = request.title;
+                if(request.send_focus === true) {
+                    sendFocus();
+                }
             }
-        }, 500);
+            if(cnt > 20) {
+                clearInterval(findModal);
+            }
+            cnt++;
+        }, 100);
+        // setTimeout(function () {
+        //     document.querySelector('[data-cy="createManualRemModal"] input#field-name')
+        //         .value = request.title;
+        //     document.querySelector('[data-cy="createManualRemModal"] input#field-name').focus();
+
+        //     if (request.send_focus === true) {
+        //         sendFocus();
+        //     }
+        // }, 500);
     }
 
     // ------- HANDLE SET AND RESET  ----------------------------------------------------------------------------
