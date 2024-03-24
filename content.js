@@ -70,11 +70,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     }
 
     // ------- Add Shortcut  ----------------------------------------------------------------------------
-    if(request.shortcut === checked && request.action === "set") {
+    if(request.shortcut === checked) {
         document.addEventListener("keydown", shortcut);
-    } else {
-        document.removeEventListener("keydown", shortcut)
-    }
+    } 
 
     // ------- HANDLE SET AND RESET  ----------------------------------------------------------------------------
     // Assign/Unassign click to "Add Manual Remediation" button

@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const shortcut = document.getElementById("shortcut");
 
     setButton.addEventListener("click", function () {
-        // console.log("clicked set button", title.value);
         chrome.tabs.query(
             { active: true, currentWindow: true },
             function (tabs) {
@@ -24,7 +23,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    // testing 
     resetButton.addEventListener("click", function () {
         // Reset settings
         title.value = '';
@@ -34,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
         chrome.tabs.query(
             { active: true, currentWindow: true },
             function (tabs) {
-                chrome.tabs.sendMessage(tabs[0].id, { action: "reset" });
+                chrome.tabs.sendMessage(tabs[0].id, { action: "reset", shortcut: false });
             }
         );
     });
