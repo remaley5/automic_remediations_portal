@@ -1,29 +1,108 @@
 body {
     min-width: 200px;
     max-width: 250px;
+    color: #231F20;
+    padding: 20px;
+}
+
+body, form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 18px;
 }
 
 h1 {
-    font-size: 20px;
+    font-size: 22px;
     text-align: center;
 }
 
-button {
-    width: 100%;
+h2 {
+    font-size: 16px;
+    font-weight: bold;
+    border-top: 2px solid  #FAAF90;
+    border-bottom: 2px solid  #FAAF90;
     padding: 10px;
-    margin-bottom: 10px;
 }
 
-html
-{
-    width: fit-content; /* max: 1000px */
-    height: 750px; /* max: 750px */
+html {
+    width: fit-content;
+    /* max: 1000px */
+    height: 750px;
+    /* max: 750px */
 }
 
+/* Label and Description */
 label {
-    font-size: 40px;
+    font-size: 14px;
 }
 
 .hidden {
-    display:none;
+    display: none;
+}
+
+.description {
+    font-size: 10px;
+    background-color: #F1FFFC;
+    border: 1px solid #2CA58D;
+    padding: 5px;
+}
+/* Form Fields */
+
+.filled {
+    background-color: #D9E4FF!important;
+    border: 1px solid #5776BB!important;
+}
+
+.checkbox .check_style {
+    background-color: #FAAF90;
+    border: 1px solid #FAAF90;
+}
+
+.text input, .toggle .toggle_style {
+    background-color: #FFE9E0;
+    border: 1px solid #FAAF90;
+}
+
+/* Buttons */
+
+.button_cont {
+    display:flex;
+    flex-direction: row;
+    column-gap: 5px;
+    width: 100%;
+    justify-content: space-between;
+}
+button {
+    font-size: 17px;
+    border: 1px solid;
+    text-align: center;
+    padding: 5px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+button#set_button {
+    background-color: #5776BB;
+    border: 1px solid #5776BB;
+    font-weight: bold;
+    color: white;
+}
+
+button#set_button.inactive {
+    background-color: #D9E4FF!important;
+    font-weight: 300!important;
+    color: #231F20!important;
+}
+
+button#reset_button {
+    background-color: #FAAF90;
+    border: 1px solid #FAAF90;
+    color: white;
+    font-weight: bold;
+}
+
+button#reset_button.inactive {
+    background-color: #FFE9E0!important;
+    border: 1px solid #FAAF90!important;
+    font-weight: 300!important;
 }

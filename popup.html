@@ -12,9 +12,11 @@
     Features to add: 
     - Kaely's dark theme 
     - Dark theme inside of the popup
-    - Toggle show/ hide directions
     - Make everything a toggle button
     -->
+    <h2>
+        Extension Settings
+    </h2>
     <!-- TOGGLE FORM INSTRUCTIONS -->
     <div class="checkbox field">
         <div class="label_cont">
@@ -26,6 +28,10 @@
             <div class="checkbox_style"></div>
         </div>
     </div> 
+
+    <h2>
+        Remediation Settings
+    </h2>
     <!-- AUTOMIC REMEDIAITON FILENAME -->
     <div class="text field">
         <div class="label_cont">
@@ -39,7 +45,7 @@
     <div class="checkbox field">
         <div class="label_cont">
             <label for="send_focus">Auto-Scroll & Focus</label>
-            <div class="description hidden" id="send_focus_desc">Enable this feature to automatically scroll to newly
+            <div class="description hidden" id="send_focus_desc">Enable to automatically scroll to newly
                 saved files in the browser and direct keyboard focus to the accordion button which expands the
                 new file.</div>
         </div>
@@ -52,7 +58,7 @@
     <div class="checkbox field">
         <div class="label_cont">
             <label for="shortcut">Shortcut Key for New Remediation</label>
-            <div class="description hidden" id="shortcut_desc">Enable this option to use the shortcut key Control +
+            <div class="description hidden" id="shortcut_desc">Enable to use the shortcut key Control +
                 Option + N to open the 'Add Manual Remediation' modal and create a new file.</div>
             </div>
             <div class="checkbox_cont">
@@ -60,8 +66,9 @@
                 <div class="checkbox_style"></div>
             </div>
     </div>
-    <div class="buttons">
-        <button id="set_button">Set</button>
+    <!-- SET & RESET -->
+    <div class="button_cont">
+        <button id="set_button">Save </button>
         <button id="reset_button">Reset</button>
     </div>
 </body>
