@@ -69,23 +69,28 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         // }, 500);
     }
 
+    // ------- Add Shortcut  ----------------------------------------------------------------------------
+    if(request.shortcut === checked && request.action === "set") {
+        document.addEventListener("keydown", shortcut);
+    } else {
+        document.removeEventListener("keydown", shortcut)
+    }
+
     // ------- HANDLE SET AND RESET  ----------------------------------------------------------------------------
     // Assign/Unassign click to "Add Manual Remediation" button
     // Assign/Unassign shortcut to body
     // ---------------------------------------------------------------------------------------------------
+    //sendResponse({ message: "That's setting something" });
     if (request.action === "set") {
         // Click "Add Manual Remediation"
         document
             .querySelector('button[data-cy="createManualRemButton"]')
             .addEventListener("click", openManualRem);
-        document.addEventListener("keydown", shortcut);
-        //sendResponse({ message: "That's setting something" });
     } else if (request.action === "reset") {
         // Unassign Click
         document
             .querySelector('button[data-cy="createManualRemButton"]')
             .removeEventListener("click", openManualRem);
-        document.removeEventListener("keydown", shortcut);
         // sendResponse({ message: "That's resetting something" });
     }
 });
