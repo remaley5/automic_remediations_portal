@@ -10,25 +10,46 @@
     <div>
         <h1>Manual Remediation Helper</h1>
         <form>
+            <!-- 
+                Features to add: 
+                - Kaely's dark theme 
+                - Dark theme inside of the popup
+                - Toggle show/ hide directions
+                - Make everything a toggle button
+             -->
+            <!-- FILENAME -->
             <div class="text field">
-                <label for="automic_name">Automic Remediation Title</label>
-                <input id="automic_name">
+               <div class="label_cont">
+                   <label for="automic_name">Filename Prefix</label>
+                   <div class="description" id="automic_name_desc">Enter text here that will be automatically filled in as
+                       the beginning of the filename when you open the 'Add New Remediation' dialog. </div>
+               </div>
+                <input id="automic_name" aria-describedby="automic_name_desc">
             </div>
+            <!-- SCROLL & FOCUS -->
             <div class="checkbox field">
-                <label for="send_focus">Send Focus To New Remediation on Creation</label>
-                <input type="checkbox" id="send_focus">
-            </div>
-            <!-- <div class="checkbox field">
-                <label for="shortcut">Shortcut: Open "Add Manual Remediation" modal with cntr + opt + n </label>
-                <input type="checkbox" id="shortcut">
-            </div> -->
-            <div class="checkbox field" style="display: flex;column-gap: 5%;align-items: flex-start;">
-                <input type="checkbox" id="send_focus" aria-describedby="send_focus_desc" style="font-size: 30px;">
-                <div class="label_desc" style="display: flex;flex-direction: column;">
-                    <label for="send_focus" aria-hidden="true" style="font-size: 16px;">Focus</label>
-                    <span class="description" id="send_focus_desc" style="font-size: 14px;font-weight: 300;">Send Focus To New File on Creation</span>
+                <div class="checkbox_cont">
+                    <input type="checkbox" id="send_focus" aria-describedby="send_focus_desc">
+                    <div class="checkbox_style"></div>
                 </div>
-
+                <div class="label_cont">
+                    <label for="send_focus">Auto-Scroll & Focus</label>
+                    <div class="description" id="send_focus_desc">Enable this feature to automatically scroll to newly
+                        saved files in the browser and direct keyboard focus to the accordion button which expands the
+                        new file.</div>
+                </div>
+            </div>
+            <!-- KEYBOARD SHORTCUT -->
+            <div class="checkbox field">
+                <div class="checkbox_cont">
+                    <input type="checkbox" id="shortcut" aria-describedby="shortcut_desc">
+                    <div class="checkbox_style"></div>
+                </div>
+                <div class="label_cont">
+                    <label for="shortcut">Shortcut Key for New Remediation</label>
+                    <div class="description" id="shortcut_desc">Enable this option to use the shortcut key Control +
+                        Option + N to open the 'Add Manual Remediation' modal and create a new file.</div>
+                </div>
             </div>
             <div class="buttons field">
                 <button id="set_button">Set</button>

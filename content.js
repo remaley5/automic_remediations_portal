@@ -16,6 +16,7 @@ const shortcut = function (e) {
 const sendFocus = function () {
     let manualRemsLength = document.querySelectorAll('table[data-cy="manualRemTable"] tr').length;
     document.querySelector('[data-cy="createManualRemModal"] button[data-cy="submitButton"]').addEventListener("click", function () {
+        console.log('Sending Focus: New file created');
         let cnt = 0;
         let findNewRem = setInterval(function () {
             let newRem = document.querySelectorAll('table[data-cy="manualRemTable"] tr')[manualRemsLength];
@@ -36,24 +37,24 @@ const sendFocus = function () {
 }
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-
     // ------- Callback: OPEN MANUAL REMEDIATION MODAL/ APPLY SETTINGS  -------------------------------------------------------------------------------
     // AutoFill text
     // Assign send focus
     // -----------------------------------------x----------------------------------------------------------
     // "Add Manual Remediation" Modal opens
     let openManualRem = function () {
+        console.log('Open manual Remediation');
         let cnt;
-        let findModal = setInterval(function() {
+        let findModal = setInterval(function () {
             let input = document.querySelector('[data-cy="createManualRemModal"] input#field-name');
-            if(input != undefined) {
+            if (input != undefined) {
                 clearInterval(findModal);
                 input.value = request.title;
-                if(request.send_focus === true) {
+                if (request.send_focus === true) {
                     sendFocus();
                 }
             }
-            if(cnt > 20) {
+            if (cnt > 20) {
                 clearInterval(findModal);
             }
             cnt++;
@@ -69,26 +70,25 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         // }, 500);
     }
 
-    // ------- Add Shortcut  ----------------------------------------------------------------------------
-    if(request.shortcut === checked) {
-        document.addEventListener("keydown", shortcut);
-    } 
+    let manualRemButton = document.querySelector('button[data-cy="createManualRemButton"]');
+    if (manualRemButton != undefined) {
+        console.log('Manual Rem button found');
+        // ------- Add Shortcut  ----------------------------------------------------------------------------
+        if (request.shortcut === true) {
+            console.log('Adding shortcut');
+            document.addEventListener("keydown", shortcut);
+        }
 
-    // ------- HANDLE SET AND RESET  ----------------------------------------------------------------------------
-    // Assign/Unassign click to "Add Manual Remediation" button
-    // Assign/Unassign shortcut to body
-    // ---------------------------------------------------------------------------------------------------
-    //sendResponse({ message: "That's setting something" });
-    if (request.action === "set") {
-        // Click "Add Manual Remediation"
-        document
-            .querySelector('button[data-cy="createManualRemButton"]')
-            .addEventListener("click", openManualRem);
-    } else if (request.action === "reset") {
-        // Unassign Click
-        document
-            .querySelector('button[data-cy="createManualRemButton"]')
-            .removeEventListener("click", openManualRem);
-        // sendResponse({ message: "That's resetting something" });
+        // ------- HANDLE SET AND RESET  ----------------------------------------------------------------------------
+        // Assign/Unassign click to "Add Manual Remediation" button
+        // Assign/Unassign shortcut to body
+        // ---------------------------------------------------------------------------------------------------
+        if (request.action === "set") {
+            console.log('Setting');
+           manualRemButton.addEventListener("click", openManualRem);
+        } else if (request.action === "reset") {
+            console.log('Resetting');
+            manualRemButton.removeEventListener("click", openManualRem);
+        }
     }
 });

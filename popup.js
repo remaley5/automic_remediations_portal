@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const shortcut = document.getElementById("shortcut");
 
     setButton.addEventListener("click", function () {
+        console.log('Set: Clicked!');
         chrome.tabs.query(
             { active: true, currentWindow: true },
             function (tabs) {
@@ -24,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     resetButton.addEventListener("click", function () {
+        console.log('Reset: Clicked!');
         // Reset settings
         title.value = '';
         send_focus.checked = false;
