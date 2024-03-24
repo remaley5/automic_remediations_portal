@@ -1,17 +1,17 @@
 
 // HELPERS 
-// ------- SEND FOCUS -------------------------------------------------------------------------------
-//  Click "Create" in "New Manual Remediation" modal - send focus and scroll to the new file
+// ------- Callback: SEND FOCUS TO NEW REMEDIATION -------------------------------------------------------------------------------
+// Assign click to "Create" button in modal
+// Look for file added, scroll and send focus when added
 // ---------------------------------------------------------------------------------------------------
-const sendFocus = function (manualRemsLength) {
+const sendFocus = function () {
+    // "Create" button in modal
     let manualRemsLength = document.querySelectorAll('table[data-cy="manualRemTable"] tr').length;
     document.querySelector('[data-cy="createManualRemModal"] button[data-cy="submitButton"]').addEventListener("click", function () {
         let cnt = 0;
         let interval = setInterval(function () {
             let newRem = document.querySelectorAll('table[data-cy="manualRemTable"] tr')[manualRemsLength];
-            
             if (newRem != undefined) {
-                console.log('Found new Rem!')
                 newRem.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
                 newRem.setAttribute('tabindex', '0');
                 newRem.focus();
@@ -28,28 +28,37 @@ const sendFocus = function (manualRemsLength) {
 }
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    // Run on click "Add Manual Remediation" button 
+
+    // ------- Callback: OPEN MANUAL REMEDIATION MODAL/ APPLY SETTINGS  -------------------------------------------------------------------------------
+    // AutoFill text
+    // Assign send focus
+    // -----------------------------------------x----------------------------------------------------------
+    // "Add Manual Remediation" Modal opens
     let openManualRem = function () {
         setTimeout(function () {
-            // Set the title in modal textbox
+            // Autofill textbox
             document.querySelector('[data-cy="createManualRemModal"] input#field-name')
                 .value = request.title;
-            // Focus the textbox
+            // Focus textbox
             document.querySelector('[data-cy="createManualRemModal"] input#field-name').focus();
-            // "Send Focus to New Remediation" is checked
+            
+            // Check send focus field 
             if (request.send_focus === true) {
                 sendFocus();
             }
         }, 500);
     }
 
+    // ------- HANDLE SET AND RESET  ----------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------
     if (request.action === "set") {
-        // click event for adding click event
+        // Click "Add Manual Remediation"
         document
             .querySelector('button[data-cy="createManualRemButton"]')
             .addEventListener("click", openManualRem);
         sendResponse({ message: "That's setting something" });
     } else if (request.action === "reset") {
+        // Unassign Click
         document
             .querySelector('button[data-cy="createManualRemButton"]')
             .removeEventListener("click", openManualRem);
