@@ -7,55 +7,50 @@
 </head>
 
 <body>
-    <div>
-        <h1>Manual Remediation Helper</h1>
-        <form>
-            <!-- 
-                Features to add: 
-                - Kaely's dark theme 
-                - Dark theme inside of the popup
-                - Toggle show/ hide directions
-                - Make everything a toggle button
-             -->
-            <!-- FILENAME -->
-            <div class="text field">
-               <div class="label_cont">
-                   <label for="automic_name">Filename Prefix</label>
-                   <div class="description" id="automic_name_desc">Enter text here that will be automatically filled in as
-                       the beginning of the filename when you open the 'Add New Remediation' dialog. </div>
-               </div>
-                <input id="automic_name" aria-describedby="automic_name_desc">
-            </div>
-            <!-- SCROLL & FOCUS -->
-            <div class="checkbox field">
-                <div class="checkbox_cont">
-                    <input type="checkbox" id="send_focus" aria-describedby="send_focus_desc">
-                    <div class="checkbox_style"></div>
-                </div>
-                <div class="label_cont">
-                    <label for="send_focus">Auto-Scroll & Focus</label>
-                    <div class="description" id="send_focus_desc">Enable this feature to automatically scroll to newly
-                        saved files in the browser and direct keyboard focus to the accordion button which expands the
-                        new file.</div>
-                </div>
-            </div>
-            <!-- KEYBOARD SHORTCUT -->
-            <div class="checkbox field">
-                <div class="checkbox_cont">
-                    <input type="checkbox" id="shortcut" aria-describedby="shortcut_desc">
-                    <div class="checkbox_style"></div>
-                </div>
-                <div class="label_cont">
-                    <label for="shortcut">Shortcut Key for New Remediation</label>
-                    <div class="description" id="shortcut_desc">Enable this option to use the shortcut key Control +
-                        Option + N to open the 'Add Manual Remediation' modal and create a new file.</div>
-                </div>
-            </div>
-            <div class="buttons field">
-                <button id="set_button">Set</button>
-                <button id="reset_button">Reset</button>
-            </div>
-        </form>
+    <h1>Manual Remediation Helper Changes?</h1>
+    <!-- 
+    Features to add: 
+    - Kaely's dark theme 
+    - Dark theme inside of the popup
+    - Toggle show/ hide directions
+    - Make everything a toggle button
+    -->
+    <div class="text field">
+        <div class="label_cont">
+            <label for="automic_name">Filename Prefix</label>
+            <div class="description" id="automic_name_desc">Enter text here that will be automatically filled in as
+                the beginning of the filename when you open the 'Add New Remediation' dialog. </div>
+        </div>
+        <input id="automic_name" aria-describedby="automic_name_desc">
+    </div>
+    <!-- FOCUS AND SCROLL -->
+    <div class="checkbox field">
+        <div class="label_cont">
+            <label for="send_focus">Auto-Scroll & Focus</label>
+            <div class="description" id="send_focus_desc">Enable this feature to automatically scroll to newly
+                saved files in the browser and direct keyboard focus to the accordion button which expands the
+                new file.</div>
+        </div>
+        <div class="checkbox_cont">
+            <input type="checkbox" id="send_focus" aria-describedby="send_focus_desc">
+            <div class="checkbox_style"></div>
+        </div>
+    </div>
+    <div class="checkbox field">
+    <div class="checkbox_cont">
+        <input type="checkbox" id="shortcut" aria-describedby="shortcut_desc">
+        <div class="checkbox_style"></div>
+    </div>
+    <!-- KEYBOARD SHORTCUT -->
+    <div class="label_cont">
+        <label for="shortcut">Shortcut Key for New Remediation</label>
+        <div class="description" id="shortcut_desc">Enable this option to use the shortcut key Control +
+            Option + N to open the 'Add Manual Remediation' modal and create a new file.</div>
+    </div>
+    </div>
+    <div class="buttons">
+        <button id="set_button">Set</button>
+        <button id="reset_button">Reset</button>
     </div>
 </body>
 
