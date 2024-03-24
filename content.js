@@ -1,42 +1,50 @@
 
-const sendFocus = function () {
-    document.querySelector('button[data-cy="createManualRemButton"]').addEventListener("click", function () {
+// HELPERS 
+// ------- SEND FOCUS -------------------------------------------------------------------------------
+//  Click "Create" in "New Manual Remediation" modal - send focus and scroll to the new file
+// ---------------------------------------------------------------------------------------------------
+const sendFocus = function (manualRemsLength) {
+    let manualRemsLength = document.querySelectorAll('table[data-cy="manualRemTable"] tr').length;
+    document.querySelector('[data-cy="createManualRemModal"] button[data-cy="submitButton"]').addEventListener("click", function () {
+        let cnt = 0;
+        let interval = setInterval(function () {
+            let newRem = document.querySelectorAll('table[data-cy="manualRemTable"] tr')[manualRemsLength];
+            
+            if (newRem != undefined) {
+                console.log('Found new Rem!')
+                newRem.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+                newRem.setAttribute('tabindex', '0');
+                newRem.focus();
+                clearInterval(interval);
+            }
 
+            if (cnt > 20) {
+                console.log("Couldn't send focus :(");
+                clearInterval(interval);
+            }
+            cnt++;
+        }, 100)
     });
 }
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    // Run on click "Add Manual Remediation" button 
     let openManualRem = function () {
         setTimeout(function () {
-            const manualRemsLength = document.querySelectorAll('table[data-cy="manualRemTable"] tr').length;
-            
-            
-            console.log('before before focus', document.querySelectorAll('table[data-cy="manualRemTable"] tr')[manualRemsLength]);
+            // Set the title in modal textbox
             document.querySelector('[data-cy="createManualRemModal"] input#field-name')
                 .value = request.title;
+            // Focus the textbox
             document.querySelector('[data-cy="createManualRemModal"] input#field-name').focus();
-            console.log('ae send focus?', request.send_focus);
-            
-            
-            // If focus is checked then send focus to the new input when manual remediation is saved
+            // "Send Focus to New Remediation" is checked
             if (request.send_focus === true) {
-                document.querySelector('[data-cy="createManualRemModal"] button[data-cy="submitButton"]').addEventListener("click", function () {
-                    console.log('before focus', document.querySelectorAll('table[data-cy="manualRemTable"] tr')[manualRemsLength]);
-                    
-                    setTimeout(function () {
-                        let newRem = document.querySelectorAll('table[data-cy="manualRemTable"] tr')[manualRemsLength];
-                        newRem.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
-                        newRem.setAttribute('tabindex', '0');
-                        newRem.focus();
-                    }, 1200);
-                });
+                sendFocus();
             }
         }, 500);
     }
 
     if (request.action === "set") {
         // click event for adding click event
-        console.log('send focus?', request.send_focus);
         document
             .querySelector('button[data-cy="createManualRemButton"]')
             .addEventListener("click", openManualRem);
