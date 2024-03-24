@@ -1,20 +1,33 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" type="text/css" href="popup.css" />
-        <script src="popup.js"></script>
-    </head>
-    <body>
-        <div>
-            <h1>Manual Remediation Helper</h1><
-            <label for="automic_name">Automic Remediation Title</label>
-            <input id="automic_name">
-            <label for="send_focus">Send Focus To New Remediation on Creation</label>
-            <input type="checkbox" id="send_focus">
-            <label for="shortcut">Shortcute: Open "Add Manual Remediation" modal with cntr + opt + n </label>
-            <input type="checkbox" id="shortcut"> 
-            <button id="set_button">Set</button>
-            <button id="reset_button">Reset</button>
-        </div>
-    </body>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="popup.css" />
+    <script src="popup.js"></script>
+</head>
+
+<body>
+    <div>
+        <h1>Manual Remediation Helper</h1>
+        <form>
+            <div class="text field">
+                <label for="automic_name">Automic Remediation Title</label>
+                <input id="automic_name">
+            </div>
+            <div class="checkbox field">
+                <label for="send_focus">Send Focus To New Remediation on Creation</label>
+                <input type="checkbox" id="send_focus">
+            </div>
+            <div class="checkbox field">
+                <label for="shortcut">Shortcut: Open "Add Manual Remediation" modal with cntr + opt + n </label>
+                <input type="checkbox" id="shortcut">
+            </div>
+            <div class="buttons field">
+                <button id="set_button">Set</button>
+                <button id="reset_button">Reset</button>
+            </div>
+        </form>
+    </div>
+</body>
+
 </html>
