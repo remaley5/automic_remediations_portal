@@ -18,9 +18,17 @@
                 <label for="send_focus">Send Focus To New Remediation on Creation</label>
                 <input type="checkbox" id="send_focus">
             </div>
-            <div class="checkbox field">
+            <!-- <div class="checkbox field">
                 <label for="shortcut">Shortcut: Open "Add Manual Remediation" modal with cntr + opt + n </label>
                 <input type="checkbox" id="shortcut">
+            </div> -->
+            <div class="checkbox field" style="display: flex;column-gap: 5%;align-items: flex-start;">
+                <input type="checkbox" id="send_focus" aria-describedby="send_focus_desc" style="font-size: 30px;">
+                <div class="label_desc" style="display: flex;flex-direction: column;">
+                    <label for="send_focus" aria-hidden="true" style="font-size: 16px;">Focus</label>
+                    <span class="description" id="send_focus_desc" style="font-size: 14px;font-weight: 300;">Send Focus To New File on Creation</span>
+                </div>
+
             </div>
             <div class="buttons field">
                 <button id="set_button">Set</button>
