@@ -1,7 +1,6 @@
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    
     // Elements
     const setButton = document.getElementById("set_button");
     const resetButton = document.getElementById("reset_button");
