@@ -4,7 +4,7 @@
 // ---------------------------------------------------------------------------------------------------
 const shortcut = function (e) {
     if (e.key === "Dead") {
-        $ae('button[data-cy="createManualRemButton"]').click();
+        document.querySelector('button[data-cy="createManualRemButton"]').click();
     }
 }
 
@@ -37,6 +37,7 @@ const sendFocus = function () {
 }
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    
     // ------- Callback: OPEN MANUAL REMEDIATION MODAL/ APPLY SETTINGS  -------------------------------------------------------------------------------
     // AutoFill text
     // Assign send focus
@@ -60,19 +61,20 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             cnt++;
         }, 100);
         // setTimeout(function () {
-        //     document.querySelector('[data-cy="createManualRemModal"] input#field-name')
-        //         .value = request.title;
-        //     document.querySelector('[data-cy="createManualRemModal"] input#field-name').focus();
-
-        //     if (request.send_focus === true) {
-        //         sendFocus();
-        //     }
-        // }, 500);
-    }
-
-    let manualRemButton = document.querySelector('button[data-cy="createManualRemButton"]');
-    if (manualRemButton != undefined) {
-        console.log('Manual Rem button found');
+            //     document.querySelector('[data-cy="createManualRemModal"] input#field-name')
+            //         .value = request.title;
+            //     document.querySelector('[data-cy="createManualRemModal"] input#field-name').focus();
+            
+            //     if (request.send_focus === true) {
+                //         sendFocus();
+                //     }
+                // }, 500);
+            }
+            
+            let manualRemButton = document.querySelector('button[data-cy="createManualRemButton"]');
+            console.log('Got message', manualRemButton != undefined);
+            if (manualRemButton != undefined) {
+                console.log('Manual Rem button found');
         // ------- Add Shortcut  ----------------------------------------------------------------------------
         if (request.shortcut === true) {
             console.log('Adding shortcut');
