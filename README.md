@@ -32,9 +32,9 @@ To do:
 - ? Directions toggle
 - Hotkey
 - ~~Send focus~~
-    - Change to setInterval
+    - ~~Change to setInterval~~
 - ~~Autofill title~~
-    - Change to setInterval
+    - (Test) Change to setInterval 
 - ~~Set~~
 - ~~Reset~~
 - Open from Popup
