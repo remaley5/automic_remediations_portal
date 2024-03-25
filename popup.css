@@ -1,14 +1,13 @@
 body {
-    min-width: 200px;
-    max-width: 250px;
     color: #231F20;
     padding: 20px;
+    min-width: 350px;
 }
 
-body, form {
+body {
     display: flex;
     flex-direction: column;
-    row-gap: 18px;
+    row-gap: 5px;
 }
 
 h1 {
@@ -19,8 +18,8 @@ h1 {
 h2 {
     font-size: 16px;
     font-weight: bold;
-    border-top: 2px solid  #FAAF90;
-    border-bottom: 2px solid  #FAAF90;
+    border-top: 2px solid #FAAF90;
+    border-bottom: 2px solid #FAAF90;
     padding: 10px;
 }
 
@@ -31,9 +30,17 @@ html {
     /* max: 750px */
 }
 
+form,
+.label_cont {
+    display: flex;
+    flex-direction: column;
+    row-gap: 14px;
+    margin-top: 10px;
+}
+
 /* Label and Description */
 label {
-    font-size: 14px;
+    font-size: 18px;
 }
 
 .hidden {
@@ -41,16 +48,19 @@ label {
 }
 
 .description {
-    font-size: 10px;
+    font-size: 14px;
     background-color: #F1FFFC;
     border: 1px solid #2CA58D;
     padding: 5px;
+    border-radius: 5px;
+    padding: 10px;
 }
+
 /* Form Fields */
 
 .filled {
-    background-color: #D9E4FF!important;
-    border: 1px solid #5776BB!important;
+    background-color: #D9E4FF !important;
+    border: 1px solid #5776BB !important;
 }
 
 .checkbox .check_style {
@@ -58,27 +68,49 @@ label {
     border: 1px solid #FAAF90;
 }
 
-.text input, .toggle .toggle_style {
+.text input,
+.toggle .toggle_style {
     background-color: #FFE9E0;
     border: 1px solid #FAAF90;
+}
+
+.checkbox.field {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+.text.field {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+}
+
+.text.field input {
+    font-size: 14px;
+    line-height: 20px;
+    padding: 5px;
 }
 
 /* Buttons */
 
 .button_cont {
-    display:flex;
+    display: flex;
     flex-direction: row;
     column-gap: 5px;
     width: 100%;
     justify-content: space-between;
 }
+
 button {
     font-size: 17px;
     border: 1px solid;
     text-align: center;
-    padding: 5px;
     margin-bottom: 10px;
     width: 100%;
+    padding: 10px;
+    border-radius: 5px;
 }
 
 button#set_button {
@@ -88,10 +120,10 @@ button#set_button {
     color: white;
 }
 
-button#set_button.inactive {
-    background-color: #D9E4FF!important;
-    font-weight: 300!important;
-    color: #231F20!important;
+button#set_button.inactive, button#set_button:hover {
+    background-color: #D9E4FF !important;
+    font-weight: 300 !important;
+    color: #231F20 !important;
 }
 
 button#reset_button {
@@ -101,8 +133,61 @@ button#reset_button {
     font-weight: bold;
 }
 
-button#reset_button.inactive {
-    background-color: #FFE9E0!important;
-    border: 1px solid #FAAF90!important;
-    font-weight: 300!important;
+button#reset_button.inactive, button#reset_button:hover {
+    background-color: #FFE9E0 !important;
+    border: 1px solid #FAAF90 !important;
+    font-weight: 300 !important;
+}
+
+
+/* Toggle */
+.checkbox input {
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    margin: 10px;
+}
+
+
+/* To create surface of toggle button */
+.checkbox input:after {
+    content: '';
+    width: 50px;
+    height: 25px;
+    display: inline-block;
+    background: rgb(253 220 220 / 55%);
+    border-radius: 15px;
+    clear: both;
+}
+
+
+/* Contents before checkbox to create toggle handle */
+.checkbox input:before {
+    content: '';
+    margin-top: auto;
+    content: '';
+    width: 17px;
+    height: 18px;
+    display: block;
+    position: absolute;
+    left: 4px;
+    top: 3.5px;
+    border-radius: 50%;
+    background: rgb(255, 255, 255);
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+
+/* Shift the handle to left on check event */
+.checkbox input:checked:before {
+    box-shadow: -1px 1px 3px rgba(0, 0, 0, 0.6);
+    left: 29px;
+}
+
+/* Background color when toggle button will be active */
+.checkbox input:checked:after {
+    background: #16a085;
 }
