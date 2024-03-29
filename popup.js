@@ -37,9 +37,13 @@ document.addEventListener("DOMContentLoaded", function () {
             send_focus_el.checked = send_focus;
             shortcut_el.checked = shortcut;
         }
-
+        // add styling if title exists
         if (title !== '') {
             toggleInactiveClass(title_el, true);
+        }
+        // enable "reset" button if settings exist
+        if(title !=='' || shortcut || send_focus) {
+            toggleDisabled(resetButton, false);
         }
 
     });

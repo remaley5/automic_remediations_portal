@@ -41,11 +41,12 @@
 - ~~Focus not moving to input~~
 - ~~Remove last click event when saving again~~
 - ~~Persist when extension is open/ closed~~
-- enable reset button when there is form data when extension is reopened
-- ? Save for revert
-- "Save" or "Reset" message
+- ~~enable reset button when there is form data when extension is reopened~~
+- Enable "reset" when extension is open with data
 - Disable "reset" if the form is empty
-- Add a return to last setting option
+- ? Save for revert
+- Add a revert to last setting option
+- "Save" or "Reset" message
 - Fix issue where if you save it then it causes an error
 
 ### Content
