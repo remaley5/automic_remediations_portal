@@ -15,8 +15,6 @@ const toggleDisabled = function (button, disabled) {
     }
 }
 
-
-
 document.addEventListener("DOMContentLoaded", function () {
     // Elements
     const saveButton = document.getElementById("save_button");
@@ -42,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
             toggleInactiveClass(title_el, true);
         }
         // enable "reset" button if settings exist
-        if(title !=='' || shortcut || send_focus) {
+        if (title !== '' || shortcut || send_focus) {
             toggleDisabled(resetButton, false);
         }
 
@@ -103,28 +101,24 @@ document.addEventListener("DOMContentLoaded", function () {
     // Click 'Save'
     // ---------------------------------------------------------
     saveButton.addEventListener("click", function () {
-        // Toggle Disabled: 'Save' and 'Reset'
+        // --------~~ TOGGLE DISABLED: 'Save' and 'Reset'
         toggleDisabled(saveButton, true);
-        toggleDisabled(resetButton, false);
+        if (title_el.value === '' || send_focus_el.checked || shortcut_el.checked) {
+            toggleDisabled(resetButton, true);
+        } else {
+            toggleDisabled(resetButton, false);
+        }
 
-        // const data = {
-        //     action: "set",
-        //     title: title_el.value,
-        //     send_focus: send_focus_el.checked,
-        //     shortcut: shortcut_el.checked
-        // };
-
+        // ------~~ SAVE DATA TO SESSION STORAGE
         const data = {
             action_store: "set",
             title: title_el.value,
             send_focus: send_focus_el.checked,
             shortcut: shortcut_el.checked
         };
-
-        // ------~~ SAVE DATA TO CHROME
         chrome.storage.session.set({ sophie: data });
 
-        // Apply setting on webpage
+        // ------~~ APPLY SETTINGS TO WEBPAGE
         chrome.tabs.query(
             { active: true, currentWindow: true },
             function (tabs) {
