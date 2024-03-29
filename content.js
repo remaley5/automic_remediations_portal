@@ -13,7 +13,7 @@ const shortcut = function (e) {
 // -------------------------------------------------------------------------------------------------------------
 const sendFocus = function () {
     let manualRemsLength = document.querySelectorAll('table[data-cy="manualRemTable"] tr').length;
-    
+
     // ----~~ "Create" button click listener ~~--------------
     document.querySelector('[data-cy="createManualRemModal"] button[data-cy="submitButton"]').addEventListener("click", function () {
         // console.log('Sending Focus: New file created');
@@ -41,7 +41,6 @@ const sendFocus = function () {
 
 // ------ INITIAL CALL ---------------------------------------------------------------------------------
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-
     // ------- OPEN MANUAL REMEDIATION MODAL/ APPLY SETTINGS  -------------------------------------------------------------------------------
     // -----~~ "Add Manual Remediation" Modal opens ~~---------
     let openManualRem = function () {

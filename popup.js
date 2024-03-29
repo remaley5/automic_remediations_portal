@@ -7,7 +7,7 @@ const toggleInactiveClass = function (elem, active) {
 }
 
 const toggleDisabled = function (button, disabled) {
-    console.log('setting disabled: ', disabled);
+    // console.log('setting disabled: ', disabled);
     if (disabled) {
         button.setAttribute('disabled', '');
     } else {
@@ -26,6 +26,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const shortcut = document.getElementById("shortcut");
     const toggle_instructions = document.getElementById("instructions");
 
+    // ---------------------------------------------------------
+    // SESSION STORAGE: Look for previously saved settings - reset 
+    // ---------------------------------------------------------
+    chrome.storage.session.get(['sophie']).then((result) => { 
+        if(!!result.sophie) {
+            title.value = result.sophie.title;
+            send_focus.checked = result.sophie.send_focus;
+            shortcut.checked = result.sophie.shortcut;
+        }
+    });
+    
     // ---------------------------------------------------------
     // STYLING: Instructions Toggle: Show/ Hide instructions
     // ---------------------------------------------------------
@@ -60,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Style: Shortcut toggle
     shortcut.addEventListener("click", function (ele) {
         toggleDisabled(saveButton, false);
-        console.log('clicked shortcut opt', ele.checked);
+        // console.log('clicked shortcut opt', ele.checked);
         if (shortcut.checked === true) {
             toggleDisabled(resetButton, false);
             //toggleDisabled(saveButton, false);
@@ -70,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Style: Send focus toggle
     send_focus.addEventListener("click", function (ele) {
         toggleDisabled(saveButton, false);
-        console.log('clicked focus opt', ele.checked);
+        // console.log('clicked focus opt', ele.checked);
         if (send_focus.checked === true) {
             toggleDisabled(resetButton, false);
         }
@@ -84,6 +95,16 @@ document.addEventListener("DOMContentLoaded", function () {
         // Toggle Disabled: 'Save' and 'Reset'
         toggleDisabled(saveButton, true);
         toggleDisabled(resetButton, false);
+
+        const data = {
+            action: "set",
+            title: title.value,
+            send_focus: send_focus.checked,
+            shortcut: shortcut.checked
+        };
+
+        // ------~~ SAVE DATA TO CHROME
+        chrome.storage.session.set({sophie: data});
 
         // Apply setting on webpage
         chrome.tabs.query(
@@ -113,6 +134,14 @@ document.addEventListener("DOMContentLoaded", function () {
         title.value = '';
         send_focus.checked = false;
         shortcut.checked = false;
+
+        // ------~~ REMOVE DATA FROM CHROME
+        chrome.storage.session.remove(["sophie"]);
+        setTimeout(function() {
+            chrome.storage.session.get(['sophie']).then((result) => { 
+                console.log('REMOVED?', result.sophie);
+            });
+        }, 100);
 
         chrome.tabs.query(
             { active: true, currentWindow: true },
