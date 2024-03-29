@@ -9,16 +9,18 @@ const shortcut = function (e) {
 }
 
 
-// ------- Send Focus to Added Remediation -------------------------------------------------------------------------------
-// Assign click to "Create" button in modal
-// Look for file added, scroll and send focus when added
-// ---------------------------------------------------------------------------------------------------
+// ------- "Send Focus & Scroll" -------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------
 const sendFocus = function () {
     let manualRemsLength = document.querySelectorAll('table[data-cy="manualRemTable"] tr').length;
+    
+    // ----~~ "Create" button click listener ~~--------------
     document.querySelector('[data-cy="createManualRemModal"] button[data-cy="submitButton"]').addEventListener("click", function () {
-        console.log('Sending Focus: New file created');
+        // console.log('Sending Focus: New file created');
         let cnt = 0;
         let findNewRem = setInterval(function () {
+            // EDIT NOTE: Change this to the button 
+            //-------~~ New Remediation 
             let newRem = document.querySelectorAll('table[data-cy="manualRemTable"] tr')[manualRemsLength];
             if (newRem != undefined) {
                 clearInterval(findNewRem);
@@ -36,21 +38,26 @@ const sendFocus = function () {
     });
 }
 
+
+// ------ INITIAL CALL ---------------------------------------------------------------------------------
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    
-    // ------- Callback: OPEN MANUAL REMEDIATION MODAL/ APPLY SETTINGS  -------------------------------------------------------------------------------
-    // AutoFill text
-    // Assign send focus
-    // -----------------------------------------x----------------------------------------------------------
-    // "Add Manual Remediation" Modal opens
+
+    // ------- OPEN MANUAL REMEDIATION MODAL/ APPLY SETTINGS  -------------------------------------------------------------------------------
+    // -----~~ "Add Manual Remediation" Modal opens ~~---------
     let openManualRem = function () {
-        console.log('Open manual Remediation');
+        // console.log('Open manual Remediation');
         let cnt;
         let findModal = setInterval(function () {
             let input = document.querySelector('[data-cy="createManualRemModal"] input#field-name');
             if (input != undefined) {
                 clearInterval(findModal);
-                input.value = request.title;
+                // ------~~ "Filename Prefix"
+                if (request.title !== '') {
+                    input.value = request.title;
+                    input.focus();
+                }
+
+                // -------~~ "Auto-Scroll & Focus"
                 if (request.send_focus === true) {
                     sendFocus();
                 }
@@ -60,36 +67,25 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             }
             cnt++;
         }, 100);
-        // setTimeout(function () {
-            //     document.querySelector('[data-cy="createManualRemModal"] input#field-name')
-            //         .value = request.title;
-            //     document.querySelector('[data-cy="createManualRemModal"] input#field-name').focus();
-            
-            //     if (request.send_focus === true) {
-                //         sendFocus();
-                //     }
-                // }, 500);
-            }
-            
-            let manualRemButton = document.querySelector('button[data-cy="createManualRemButton"]');
-            console.log('Got message', manualRemButton != undefined);
-            if (manualRemButton != undefined) {
-                console.log('Manual Rem button found');
-        // ------- Add Shortcut  ----------------------------------------------------------------------------
+
+    }
+
+    let manualRemButton = document.querySelector('button[data-cy="createManualRemButton"]');
+
+    if (manualRemButton != undefined) {
+        // ----~~ "Shortcut Key for New Remediation" ~~--------------
         if (request.shortcut === true) {
-            console.log('Adding shortcut');
             document.addEventListener("keydown", shortcut);
+        } else {
+            document.removeEventListener("keydown", shortcut);
         }
 
         // ------- HANDLE SET AND RESET  ----------------------------------------------------------------------------
-        // Assign/Unassign click to "Add Manual Remediation" button
-        // Assign/Unassign shortcut to body
-        // ---------------------------------------------------------------------------------------------------
+        // ----------------------------------------------------------------------------------------------------------
         if (request.action === "set") {
-            console.log('Setting');
-           manualRemButton.addEventListener("click", openManualRem);
+            manualRemButton.removeEventListener("click", openManualRem);
+            manualRemButton.addEventListener("click", openManualRem);
         } else if (request.action === "reset") {
-            console.log('Resetting');
             manualRemButton.removeEventListener("click", openManualRem);
         }
     }

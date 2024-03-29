@@ -58,9 +58,9 @@ label {
 
 /* Form Fields */
 
-.filled {
-    background-color: #D9E4FF !important;
-    border: 1px solid #5776BB !important;
+.filled, .text input {
+    background-color: #D9E4FF;
+    border: 1px solid #5776BB;
 }
 
 .checkbox .check_style {
@@ -68,10 +68,9 @@ label {
     border: 1px solid #FAAF90;
 }
 
-.text input,
-.toggle .toggle_style {
-    background-color: #FFE9E0;
-    border: 1px solid #FAAF90;
+.text input.inactive {
+    background-color: #FFE9E0!important;
+    border: 1px solid #FAAF90!important;
 }
 
 .checkbox.field {
@@ -113,17 +112,16 @@ button {
     border-radius: 5px;
 }
 
-button#set_button {
+button#save_button {
     background-color: #5776BB;
     border: 1px solid #5776BB;
     font-weight: bold;
     color: white;
 }
 
-button#set_button.inactive, button#set_button:hover {
+button#save_button:disabled, button#save_button:hover {
     background-color: #D9E4FF !important;
     font-weight: 300 !important;
-    color: #231F20 !important;
 }
 
 button#reset_button {
@@ -133,10 +131,14 @@ button#reset_button {
     font-weight: bold;
 }
 
-button#reset_button.inactive, button#reset_button:hover {
+button#reset_button:disabled, button#reset_button:hover {
     background-color: #FFE9E0 !important;
     border: 1px solid #FAAF90 !important;
     font-weight: 300 !important;
+}
+
+button#reset_button:disabled, button#save_button:disabled {
+    color: #231F20 !important;
 }
 
 
@@ -158,7 +160,8 @@ button#reset_button.inactive, button#reset_button:hover {
     width: 50px;
     height: 25px;
     display: inline-block;
-    background: rgb(253 220 220 / 55%);
+    background-color: #FAAF90;
+    border: 1px solid #FAAF90;
     border-radius: 15px;
     clear: both;
 }
@@ -176,7 +179,8 @@ button#reset_button.inactive, button#reset_button:hover {
     left: 4px;
     top: 3.5px;
     border-radius: 50%;
-    background: rgb(255, 255, 255);
+    background: #FFE9E0;
+    border: 1px solid  #FAAF90;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
 }
 
@@ -185,9 +189,12 @@ button#reset_button.inactive, button#reset_button:hover {
 .checkbox input:checked:before {
     box-shadow: -1px 1px 3px rgba(0, 0, 0, 0.6);
     left: 29px;
+    background: #5776BB;
+    border: 1px solid #5776BB;
 }
 
 /* Background color when toggle button will be active */
 .checkbox input:checked:after {
-    background: #16a085;
+    background: #D9E4FF!important;
+    border: 1px solid #5776BB;
 }
