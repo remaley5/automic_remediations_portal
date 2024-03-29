@@ -40,7 +40,9 @@
 - ~~Reset~~
 - ~~Focus not moving to input~~
 - ~~Remove last click event when saving again~~
-- Persist when extension is open/ closed
+- ~~Persist when extension is open/ closed~~
+- enable reset button when there is form data when extension is reopened
+- ? Save for revert
 - "Save" or "Reset" message
 - Disable "reset" if the form is empty
 - Add a return to last setting option
@@ -48,7 +50,6 @@
 
 ### Content
 - Add in automic remediations link
-
 
 ### Styling
 - Popup dark theme?
