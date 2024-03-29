@@ -43,7 +43,7 @@
 - ~~Persist when extension is open/ closed~~
 - ~~enable reset button when there is form data when extension is reopened~~
 - ~~Enable "reset" when extension is open with data~~
-- Disable "reset" if the form is empty
+- ~~Disable "reset" if the form is empty~~
 - ? Save for revert
 - Add a revert to last setting option
 - "Save" or "Reset" message

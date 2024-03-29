@@ -15,6 +15,7 @@ const toggleDisabled = function (button, disabled) {
     }
 }
 
+
 document.addEventListener("DOMContentLoaded", function () {
     // Elements
     const saveButton = document.getElementById("save_button");
@@ -23,6 +24,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const send_focus_el = document.getElementById("send_focus");
     const shortcut_el = document.getElementById("shortcut");
     const toggle_instructions = document.getElementById("instructions");
+    
+    // ---------~~ Disable Reset button if form is empty
+    const checkEmptyForm = function() {
+        if (title_el.value !== '' || send_focus_el.checked || shortcut_el.checked) {
+            toggleDisabled(resetButton, false);
+        } else {
+            toggleDisabled(resetButton, true);
+        }
+    }
 
     // ---------------------------------------------------------
     // SESSION STORAGE: Look for previously saved settings - reset 
@@ -71,6 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
         toggleDisabled(saveButton, false);
         if (title_el.value === '') {
             toggleInactiveClass(title_el, false);
+            checkEmptyForm();
         } else if (title_el.classList.contains('inactive')) {
             toggleInactiveClass(title_el, true);
             toggleDisabled(resetButton, false);
@@ -84,6 +95,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (shortcut_el.checked === true) {
             toggleDisabled(resetButton, false);
             //toggleDisabled(saveButton, false);
+        } else {
+            checkEmptyForm();
         }
     });
 
@@ -93,6 +106,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // console.log('clicked focus opt', ele.checked);
         if (send_focus_el.checked === true) {
             toggleDisabled(resetButton, false);
+        } else {
+            checkEmptyForm();
         }
     });
 
@@ -103,11 +118,12 @@ document.addEventListener("DOMContentLoaded", function () {
     saveButton.addEventListener("click", function () {
         // --------~~ TOGGLE DISABLED: 'Save' and 'Reset'
         toggleDisabled(saveButton, true);
-        if (title_el.value === '' || send_focus_el.checked || shortcut_el.checked) {
-            toggleDisabled(resetButton, true);
-        } else {
-            toggleDisabled(resetButton, false);
-        }
+        checkEmptyForm();
+        // if (title_el.value === '' || send_focus_el.checked || shortcut_el.checked) {
+        //     toggleDisabled(resetButton, true);
+        // } else {
+        //     toggleDisabled(resetButton, false);
+        // }
 
         // ------~~ SAVE DATA TO SESSION STORAGE
         const data = {
