@@ -29,16 +29,21 @@ document.addEventListener("DOMContentLoaded", function () {
     // ---------------------------------------------------------
     // SESSION STORAGE: Look for previously saved settings - reset 
     // ---------------------------------------------------------
-    chrome.storage.session.get(['sophie']).then((result) => { 
+    chrome.storage.session.get(['sophie']).then((result) => {
         // unpack
-        let {send_focus, title, shortcut} = result.sophie;
-        if(!!result.sophie) {
+        let { send_focus, title, shortcut } = result.sophie;
+        if (!!result.sophie) {
             title_el.value = title;
             send_focus_el.checked = send_focus;
             shortcut_el.checked = shortcut;
         }
+
+        if (title !== '') {
+            toggleInactiveClass(title_el, true);
+        }
+
     });
-    
+
     // ---------------------------------------------------------
     // STYLING: Instructions Toggle: Show/ Hide instructions
     // ---------------------------------------------------------
@@ -113,7 +118,7 @@ document.addEventListener("DOMContentLoaded", function () {
         };
 
         // ------~~ SAVE DATA TO CHROME
-        chrome.storage.session.set({sophie: data});
+        chrome.storage.session.set({ sophie: data });
 
         // Apply setting on webpage
         chrome.tabs.query(
