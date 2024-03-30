@@ -213,3 +213,17 @@ button#reset_button:disabled, button#save_button:disabled {
     background: #F1FFFC;
     border: 1px solid #2CA58D;
 }
+
+/* Shift the handle to left on check event */
+.dark-mode.checkbox input:checked:before {
+    box-shadow: -1px 1px 3px rgba(0, 0, 0, 0.6);
+    left: 29px;
+    background: black;
+    border: 1px solid black;
+}
+
+/* Background color when toggle button will be active */
+.dark-mode.checkbox input:checked:after {
+    background: rgb(206, 205, 205);
+    border: 1px solid black;
+}

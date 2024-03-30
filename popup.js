@@ -27,10 +27,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const instructions_toggle = document.getElementById("instructions_toggle");
     const status_text = document.getElementById('status_text');
     const revert_button = document.getElementById('revert_button');
+    const dark_mode_toggle = document.getElementById('dark_mode_toggle');
     let last_saved = {
         title: '',
         send_focus: false,
-        shortcut: false
+        shortcut: false, 
+        dark_mode: false
     };
 
 
@@ -116,7 +118,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // --~~ "Shortcut"
     shortcut_toggle.addEventListener("click", function (ele) {
         changeOnInput();
-
         if (shortcut_toggle.checked === true) {
             reset_button.removeAttribute('disabled');
             save_button.removeAttribute('disabled');
@@ -128,7 +129,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // --~~ "Send Focus & Scroll"
     focus_toggle.addEventListener("click", function (ele) {
         changeOnInput();
-
         save_button.removeAttribute('disabled');
         if (focus_toggle.checked === true) {
             reset_button.removeAttribute('disabled');
@@ -243,4 +243,20 @@ document.addEventListener("DOMContentLoaded", function () {
         revert_button.setAttribute('disabled', '');
     });
 
+     // ---------------------------------------------------------
+    // CLICK 'Dark Mode'
+    // ---------------------------------------------------------
+    dark_mode_toggle.addEventListener("click", function () {
+        // -------~~ RESET LAST SAVED 
+        last_saved.dark_mode = dark_mode_toggle.checked;
+        
+        console.log('sending dark mode');
+        // ------~~ APPLY TO WEBPAGE 
+        chrome.tabs.query(
+            { active: true, currentWindow: true },
+            function (tabs) {
+                chrome.tabs.sendMessage(tabs[0].id, { action: "style", dark_mode: dark_mode_toggle.checked });
+            }
+        );
+    });
 });
