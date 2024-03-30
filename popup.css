@@ -186,7 +186,7 @@ button#reset_button:disabled, button#save_button:disabled {
 
 
 /* Shift the handle to left on check event */
-.checkbox input:checked:before {
+.portal-setting.checkbox input:checked:before {
     box-shadow: -1px 1px 3px rgba(0, 0, 0, 0.6);
     left: 29px;
     background: #5776BB;
@@ -194,7 +194,22 @@ button#reset_button:disabled, button#save_button:disabled {
 }
 
 /* Background color when toggle button will be active */
-.checkbox input:checked:after {
+.portal-setting.checkbox input:checked:after {
     background: #D9E4FF!important;
     border: 1px solid #5776BB;
+}
+
+
+/* Shift the handle to left on check event */
+.extension-settings.checkbox input:checked:before {
+    box-shadow: -1px 1px 3px rgba(0, 0, 0, 0.6);
+    left: 29px;
+    background: #2CA58D;
+    border: 1px solid #2CA58D;
+}
+
+/* Background color when toggle button will be active */
+.extension-settings.checkbox input:checked:after {
+    background: #F1FFFC;
+    border: 1px solid #2CA58D;
 }

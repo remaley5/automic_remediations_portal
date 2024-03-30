@@ -34,15 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
 
-    const handleChange = function () {
-        if (revert_button.hasAttribute('disabled')) {
-            revert_button.removeAttribute('disabled');
-        } if (status_text.innerHTML !== '') {
-            status_text.innerHTML === '';
-        }
-
-    }
-
+    
     // ---------~~ DISABLE "RESET" BUTTON IF FORM IS EMPTY
     const checkEmptyForm = function () {
         if (title_input.value !== '' || focus_toggle.checked || shortcut_toggle.checked) {
@@ -52,8 +44,18 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    const changeOnInput = function () {
+        revert_button.removeAttribute('disabled');
+        if (save_button.hasAttribute('disabled')) {
+            save_button.removeAttribute('disabled');
+        }
+        if(!(status_text.classList.contains('hidden'))) {
+            status_text.classList.add('hidden');
+        }
+    }
+
     // ---------------------------------------------------------
-    // SESSION STORAGE: Look for previously saved settings - reset 
+    // CHECK SESSION STORAGE ON EXTENSION LOAD
     // ---------------------------------------------------------
     chrome.storage.session.get(['sophie']).then((result) => {
         // unpack
@@ -76,8 +78,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (title !== '' || shortcut || send_focus) {
                     reset_button.removeAttribute('disabled');
                 }
-
-                console.log('LAST SAVED: ', last_saved);
             }
         }
     });
@@ -102,11 +102,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // ---------------------------------------------------------
     // --~~ "Filename Prefix"
     title_input.addEventListener("input", function () {
-        revert_button.removeAttribute('disabled');
-        status_text.innerHTML === ' ';
-        if (save_button.hasAttribute('disabled')) {
-            save_button.removeAttribute('disabled');
-        }
+        changeOnInput();
 
         if (title_input.value === '') {
             toggleInactiveClass(title_input, false);
@@ -119,11 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // --~~ "Shortcut"
     shortcut_toggle.addEventListener("click", function (ele) {
-        revert_button.removeAttribute('disabled');
-        status_text.innerHTML === ' ';
-        if (save_button.hasAttribute('disabled')) {
-            save_button.removeAttribute('disabled');
-        }
+        changeOnInput();
 
         if (shortcut_toggle.checked === true) {
             reset_button.removeAttribute('disabled');
@@ -135,11 +127,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // --~~ "Send Focus & Scroll"
     focus_toggle.addEventListener("click", function (ele) {
-        revert_button.removeAttribute('disabled');
-        status_text.innerHTML === ' ';
-        if (save_button.hasAttribute('disabled')) {
-            save_button.removeAttribute('disabled');
-        }
+        changeOnInput();
 
         save_button.removeAttribute('disabled');
         if (focus_toggle.checked === true) {
@@ -149,7 +137,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // ---------------------------------------------------------
     // ---------------------------------------------------------
     // CLICK 'Save'
     // ---------------------------------------------------------
