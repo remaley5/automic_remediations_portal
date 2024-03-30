@@ -8,14 +8,6 @@ const toggleInactiveClass = function (elem, active) {
     }
 }
 
-const toggleDisabled = function (button, disabled) {
-    if (disabled) {
-        button.setAttribute('disabled', '');
-    } else {
-        button.removeAttribute('disabled');
-    }
-}
-
 
 document.addEventListener("DOMContentLoaded", function () {
     // Elements
@@ -59,14 +51,16 @@ document.addEventListener("DOMContentLoaded", function () {
     // ---------------------------------------------------------
     // CHECK SESSION STORAGE ON EXTENSION LOAD
     // ---------------------------------------------------------
-    chrome.storage.session.get(['sophie']).then((result) => {
+    chrome.storage.session.get(['sophie', 'dark_mode']).then((result) => {
+        console.log('getting session storage', result.sophie);
         // unpack
-        if (result.sophie != undefined) {
+        if (!!result.sophie) {
             // --~~ SAVE FOR REVERT
             last_saved = result.sophie;
 
             let { send_focus, title, shortcut } = result.sophie;
 
+            console.log('setting: ', send_focus, title, shortcut);
             if (!!result.sophie) {
                 // --~~ RESET EXTENSION FORM FIELDS
                 title_input.value = title;
@@ -81,6 +75,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     reset_button.removeAttribute('disabled');
                 }
             }
+
+            
+        }
+        
+        // ----~~ RESET DARK MODE
+        if(!!result.dark_mode) {
+            dark_mode_toggle.checked = true;
         }
     });
 
@@ -149,16 +150,15 @@ document.addEventListener("DOMContentLoaded", function () {
         revert_button.setAttribute('disabled', '');
         checkEmptyForm();
 
-
-        const data = {
-            action_store: "set",
-            title: title_input.value,
-            send_focus: focus_toggle.checked,
-            shortcut: shortcut_toggle.checked
-        };
+        last_saved.action_store = "set";
+        last_saved.title = title_input.value;
+        last_saved.send_focus = focus_toggle.checked;
+        last_saved.shortcut = shortcut_toggle.checked;
 
         // ------~~ SAVE DATA TO SESSION STORAGE
-        chrome.storage.session.set({ sophie: data });
+        console.log('setting session storage', last_saved);
+        chrome.storage.session.set({ sophie: last_saved });
+        
         // -------~~ SAVE FOR REVERT
         last_saved = data;
 
@@ -194,8 +194,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // -------~~ RESET STYLING AND DISABLED
         revert_button.setAttribute('disabled', '');
-        toggleDisabled(reset_button, true);
-        toggleDisabled(save_button, true);
+        reset_button.setAttribute('disabled', '');
+        save_button.setAttribute('disabled', '');
         toggleInactiveClass(title_input, false);
 
         // -------~~ RESET EXTENSION FORM FIELDS
@@ -203,8 +203,13 @@ document.addEventListener("DOMContentLoaded", function () {
         focus_toggle.checked = false;
         shortcut_toggle.checked = false;
 
-        // ------~~ REMOVE DATA FROM SESSION STORAGE
-        chrome.storage.session.remove(["sophie"]);
+        // ------~~ RESET DATA IN SESSION STORAGE
+        last_saved.action_store = "reset";
+        last_saved.title = '';
+        last_saved.send_focus = false
+        last_saved.shortcut = false
+
+        chrome.storage.session.set({ sophie: last_saved });
 
         // ------~~ APPLY TO WEBPAGE 
         chrome.tabs.query(
@@ -248,7 +253,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // ---------------------------------------------------------
     dark_mode_toggle.addEventListener("click", function () {
         // -------~~ RESET LAST SAVED 
-        last_saved.dark_mode = dark_mode_toggle.checked;
+        chrome.storage.session.set({ dark_mode: dark_mode_toggle.checked });
         
         console.log('sending dark mode');
         // ------~~ APPLY TO WEBPAGE 
