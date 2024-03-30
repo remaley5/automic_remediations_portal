@@ -44,8 +44,8 @@
 - ~~enable reset button when there is form data when extension is reopened~~
 - ~~Enable "reset" when extension is open with data~~
 - ~~Disable "reset" if the form is empty~~
-- ? Save for revert
-- Add a revert to last setting option
+- ~~? Save for revert~~
+- ~~Add a revert to last setting option~~
 - ~~"Save" or "Reset"  message~~
 - Fix issue where if you save it then it causes an error
 
@@ -57,8 +57,8 @@
 - Indication of click reset or set
 - Smooth transition for toggle
 - Instructions
-    - Make "Show instructions" toggle green when turned on
-    - Margin with instructions
+    - ~~Make "Show instructions" toggle green when turned on~~
+    - ~~Margin with instructions~~
     - Smooth transitions for instructions
 
 

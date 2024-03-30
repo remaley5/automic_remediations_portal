@@ -241,19 +241,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         save_button.setAttribute('disabled', '');
         revert_button.setAttribute('disabled', '');
-
-        // -------~~ APPLY TO WEBPAGE
-        chrome.tabs.query(
-            { active: true, currentWindow: true },
-            function (tabs) {
-                chrome.tabs.sendMessage(tabs[0].id, {
-                    action: "set",
-                    title: title,
-                    send_focus: send_focus,
-                    shortcut: shortcut
-                });
-            }
-        );
     });
 
 });

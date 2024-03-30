@@ -47,13 +47,13 @@ label {
     display: none;
 }
 
-.description {
-    font-size: 14px;
+.description, .message {
+    font-size: 16px;
     background-color: #F1FFFC;
     border: 1px solid #2CA58D;
-    padding: 5px;
     border-radius: 5px;
     padding: 10px;
+    margin-bottom: 20px;
 }
 
 /* Form Fields */
