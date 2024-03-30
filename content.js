@@ -1,16 +1,26 @@
 // BACKGROUND 
-let dark_mode_css = [`.monaco-editor,.monaco-editor-background {
-    h1 {
-        color: pink!important;
-    }
-    background-color: #0d1117;
+let dark_mode_css = [
+    `.monaco-editor-background {
+        background-color: #0d1117 !important;
+    }`,
+    `.margin{
+        background-color: #0d1117 !important;
+    }`,
+    `.margin .active-line-number {
+        color: #7ee787 !important;
+    }  `, 
+    `.monaco-scrollable-element .monaco-editor-background {
+        background-color: #0d1117 !important;
+    }`,
+    `.monaco-editor {
+        background-color: #0d1117;
     }`,
     // ele.outerFind, $ae, methods (.filter, .find, .attr, etc) 
     `.mtk1 {
-    color: #79c0ff;
+        color: #79c0ff;
     }`,
     `.mtk5 {
-    color: #cd9178;
+        color: #cd9178;
     }`,
     // Inner function, THIS, if, else, VAR, CONST 
     `.mtk6 {
@@ -18,7 +28,7 @@ let dark_mode_css = [`.monaco-editor,.monaco-editor-background {
     }`,
     // bracket text 
     `.mtk7 {
-    color: #ff7b72;
+        color: #ff7b72;
     }`,
     // COMMENTS 
     `.mtk8 {
@@ -164,8 +174,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         var style = document.createElement('style'),
             css = '';
         css += style;
-        dark_mode_css.forEach(function(el) {
-            css += el;
+        dark_mode_css.forEach(function (el) {
+            css += `.dark-mode ${el}`;
         });
         style.type = 'text/css';
         style.setAttribute("id", "dma-temp-global-style");
@@ -175,5 +185,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         if (head) {
             head.appendChild(style);
         }
+
+        document.querySelector('body').classList.add('dark-mode');
     }
 });
