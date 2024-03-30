@@ -95,7 +95,6 @@ const sendFocus = function () {
 
     // ----~~ "Create" button click listener ~~--------------
     document.querySelector('[data-cy="createManualRemModal"] button[data-cy="submitButton"]').addEventListener("click", function () {
-        // console.log('Sending Focus: New file created');
         let cnt = 0;
         let findNewRem = setInterval(function () {
             // EDIT NOTE: Change this to the button 
@@ -109,7 +108,6 @@ const sendFocus = function () {
             }
 
             if (cnt > 20) {
-                console.log("Couldn't send focus :(");
                 clearInterval(findNewRem);
             }
             cnt++;
@@ -120,11 +118,9 @@ const sendFocus = function () {
 
 // ------ INITIAL CALL ---------------------------------------------------------------------------------
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    console.log('sophie getting message', request.action);
     // ------- OPEN MANUAL REMEDIATION MODAL/ APPLY SETTINGS  -------------------------------------------------------------------------------
     // -----~~ "Add Manual Remediation" Modal opens ~~---------
     let openManualRem = function () {
-        // console.log('Open manual Remediation');
         let cnt;
         let findModal = setInterval(function () {
             let input = document.querySelector('[data-cy="createManualRemModal"] input#field-name');
@@ -167,25 +163,36 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         } else if (request.action === "reset") {
             manualRemButton.removeEventListener("click", openManualRem);
         }
-    }
+        // ------- HANDLE DARK MODE  ----------------------------------------------------------------------------
+        // ----------------------------------------------------------------------------------------------------------
+    
+        if (request.action === "dark-mode") {
 
-    if (request.action === "style") {
-        console.log('setting style');
-        var style = document.createElement('style'),
-            css = '';
-        css += style;
-        dark_mode_css.forEach(function (el) {
-            css += `.dark-mode ${el}`;
-        });
-        style.type = 'text/css';
-        style.setAttribute("id", "dma-temp-global-style");
-        style.setAttribute("class", "dmn-custom-remove-after-load");
-        style.appendChild(document.createTextNode(css));
-        const head = document.documentElement || document.head || document.querySelector("head");
-        if (head) {
-            head.appendChild(style);
+            // -----~~ Append style if not there
+            if(!document.querySelector('#dark-mode-style')) {
+                var style = document.createElement('style'),
+                    css = '';
+                css += style;
+                dark_mode_css.forEach(function (el) {
+                    css += `.dark-mode ${el}`;
+                });
+                style.type = 'text/css';
+                style.setAttribute("id", "dark-mode-style");
+                style.appendChild(document.createTextNode(css));
+                const head = document.documentElement || document.head || document.querySelector("head");
+                if (head) {
+                    head.appendChild(style);
+                }
+            }
+
+
+            // ----~~ Toggle dark mode class
+            if(request.dark_mode === true) {
+                document.querySelector('body').classList.add('dark-mode');
+            } else {
+                document.querySelector('body').classList.remove('dark-mode');
+            }
         }
-
-        document.querySelector('body').classList.add('dark-mode');
     }
+
 });
