@@ -4,11 +4,12 @@
     "version": "1.0",
     "description": "Manual Remediation Helper. Autofill Automic Remediation, Add Hotkey, Scroll to new remediation file",
     "permissions": [
-        "activeTab", 
+        "activeTab",
         "storage"
     ],
     "background": {
-        "service_worker": "background.js"
+        "service_worker": "background.js",
+        "type": "module"
     },
     "action": {
         "default_popup": "popup.html"

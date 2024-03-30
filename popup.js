@@ -1,3 +1,5 @@
+// import {getSessionStorage} from './popup.js'
+
 const toggleInactiveClass = function (elem, active) {
     if (active) {
         elem.classList.remove('inactive');
@@ -7,7 +9,6 @@ const toggleInactiveClass = function (elem, active) {
 }
 
 const toggleDisabled = function (button, disabled) {
-    // console.log('setting disabled: ', disabled);
     if (disabled) {
         button.setAttribute('disabled', '');
     } else {
@@ -18,19 +19,36 @@ const toggleDisabled = function (button, disabled) {
 
 document.addEventListener("DOMContentLoaded", function () {
     // Elements
-    const saveButton = document.getElementById("save_button");
-    const resetButton = document.getElementById("reset_button");
-    const title_el = document.getElementById("automic_name");
-    const send_focus_el = document.getElementById("send_focus");
-    const shortcut_el = document.getElementById("shortcut");
-    const toggle_instructions = document.getElementById("instructions");
-    
-    // ---------~~ Disable Reset button if form is empty
-    const checkEmptyForm = function() {
-        if (title_el.value !== '' || send_focus_el.checked || shortcut_el.checked) {
-            toggleDisabled(resetButton, false);
+    const save_button = document.getElementById("save_button");
+    const reset_button = document.getElementById("reset_button");
+    const title_input = document.getElementById("automic_name");
+    const focus_toggle = document.getElementById("focus_toggle");
+    const shortcut_toggle = document.getElementById("shortcut_toggle");
+    const instructions_toggle = document.getElementById("instructions_toggle");
+    const status_text = document.getElementById('status_text');
+    const revert_button = document.getElementById('revert_button');
+    let last_saved = {
+        title: '',
+        send_focus: false,
+        shortcut: false
+    };
+
+
+    const handleChange = function () {
+        if (revert_button.hasAttribute('disabled')) {
+            revert_button.removeAttribute('disabled');
+        } if (status_text.innerHTML !== '') {
+            status_text.innerHTML === '';
+        }
+
+    }
+
+    // ---------~~ DISABLE "RESET" BUTTON IF FORM IS EMPTY
+    const checkEmptyForm = function () {
+        if (title_input.value !== '' || focus_toggle.checked || shortcut_toggle.checked) {
+            reset_button.removeAttribute('disabled');
         } else {
-            toggleDisabled(resetButton, true);
+            reset_button.setAttribute('disabled', '');
         }
     }
 
@@ -39,28 +57,36 @@ document.addEventListener("DOMContentLoaded", function () {
     // ---------------------------------------------------------
     chrome.storage.session.get(['sophie']).then((result) => {
         // unpack
-        let { send_focus, title, shortcut } = result.sophie;
-        if (!!result.sophie) {
-            title_el.value = title;
-            send_focus_el.checked = send_focus;
-            shortcut_el.checked = shortcut;
-        }
-        // add styling if title exists
-        if (title !== '') {
-            toggleInactiveClass(title_el, true);
-        }
-        // enable "reset" button if settings exist
-        if (title !== '' || shortcut || send_focus) {
-            toggleDisabled(resetButton, false);
-        }
+        if (result.sophie != undefined) {
+            // --~~ SAVE FOR REVERT
+            last_saved = result.sophie;
 
+            let { send_focus, title, shortcut } = result.sophie;
+
+            if (!!result.sophie) {
+                // --~~ RESET EXTENSION FORM FIELDS
+                title_input.value = title;
+                focus_toggle.checked = send_focus;
+                shortcut_toggle.checked = shortcut;
+
+                // --~~ SET STYLING / DISABLED 
+                if (title !== '') {
+                    toggleInactiveClass(title_input, true);
+                }
+                if (title !== '' || shortcut || send_focus) {
+                    reset_button.removeAttribute('disabled');
+                }
+
+                console.log('LAST SAVED: ', last_saved);
+            }
+        }
     });
 
     // ---------------------------------------------------------
-    // STYLING: Instructions Toggle: Show/ Hide instructions
+    // "Instructions" TOGGLE
     // ---------------------------------------------------------
-    toggle_instructions.addEventListener("click", function () {
-        if (toggle_instructions.checked === true) {
+    instructions_toggle.addEventListener("click", function () {
+        if (instructions_toggle.checked === true) {
             document.querySelectorAll('.description').forEach(function (ele) {
                 ele.classList.remove('hidden')
             });
@@ -72,40 +98,52 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // ---------------------------------------------------------
+    // TOGGLE STYLING ON FORM INPUT
     // ---------------------------------------------------------
-    // STYLING: Toggles/ Input: 'On'/ 'off' styling ('inactive' class)
-    // ---------------------------------------------------------
-    // Style: Title input
-    title_el.addEventListener("input", function () {
-        //console.log('title value: ', title.value != '');
-        toggleDisabled(saveButton, false);
-        if (title_el.value === '') {
-            toggleInactiveClass(title_el, false);
+    // --~~ "Filename Prefix"
+    title_input.addEventListener("input", function () {
+        revert_button.removeAttribute('disabled');
+        status_text.innerHTML === ' ';
+        if (save_button.hasAttribute('disabled')) {
+            save_button.removeAttribute('disabled');
+        }
+
+        if (title_input.value === '') {
+            toggleInactiveClass(title_input, false);
             checkEmptyForm();
-        } else if (title_el.classList.contains('inactive')) {
-            toggleInactiveClass(title_el, true);
-            toggleDisabled(resetButton, false);
+        } else if (title_input.classList.contains('inactive')) {
+            toggleInactiveClass(title_input, true);
+            reset_button.removeAttribute('disabled');
         }
     });
 
-    // Style: Shortcut toggle
-    shortcut_el.addEventListener("click", function (ele) {
-        toggleDisabled(saveButton, false);
-        // console.log('clicked shortcut opt', ele.checked);
-        if (shortcut_el.checked === true) {
-            toggleDisabled(resetButton, false);
-            //toggleDisabled(saveButton, false);
+    // --~~ "Shortcut"
+    shortcut_toggle.addEventListener("click", function (ele) {
+        revert_button.removeAttribute('disabled');
+        status_text.innerHTML === ' ';
+        if (save_button.hasAttribute('disabled')) {
+            save_button.removeAttribute('disabled');
+        }
+
+        if (shortcut_toggle.checked === true) {
+            reset_button.removeAttribute('disabled');
+            save_button.removeAttribute('disabled');
         } else {
             checkEmptyForm();
         }
     });
 
-    // Style: Send focus toggle
-    send_focus_el.addEventListener("click", function (ele) {
-        toggleDisabled(saveButton, false);
-        // console.log('clicked focus opt', ele.checked);
-        if (send_focus_el.checked === true) {
-            toggleDisabled(resetButton, false);
+    // --~~ "Send Focus & Scroll"
+    focus_toggle.addEventListener("click", function (ele) {
+        revert_button.removeAttribute('disabled');
+        status_text.innerHTML === ' ';
+        if (save_button.hasAttribute('disabled')) {
+            save_button.removeAttribute('disabled');
+        }
+
+        save_button.removeAttribute('disabled');
+        if (focus_toggle.checked === true) {
+            reset_button.removeAttribute('disabled');
         } else {
             checkEmptyForm();
         }
@@ -113,26 +151,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // ---------------------------------------------------------
     // ---------------------------------------------------------
-    // Click 'Save'
+    // CLICK 'Save'
     // ---------------------------------------------------------
-    saveButton.addEventListener("click", function () {
-        // --------~~ TOGGLE DISABLED: 'Save' and 'Reset'
-        toggleDisabled(saveButton, true);
+    save_button.addEventListener("click", function () {
+        status_text.innerHTML = 'Settings Saved!';
+        status_text.classList.remove('hidden');
+        
+        // -------~~ TOGGLE STYLING AND DISABLED
+        save_button.setAttribute('disabled', '');
+        revert_button.setAttribute('disabled', '');
         checkEmptyForm();
-        // if (title_el.value === '' || send_focus_el.checked || shortcut_el.checked) {
-        //     toggleDisabled(resetButton, true);
-        // } else {
-        //     toggleDisabled(resetButton, false);
-        // }
 
-        // ------~~ SAVE DATA TO SESSION STORAGE
+
         const data = {
             action_store: "set",
-            title: title_el.value,
-            send_focus: send_focus_el.checked,
-            shortcut: shortcut_el.checked
+            title: title_input.value,
+            send_focus: focus_toggle.checked,
+            shortcut: shortcut_toggle.checked
         };
+
+        // ------~~ SAVE DATA TO SESSION STORAGE
         chrome.storage.session.set({ sophie: data });
+        // -------~~ SAVE FOR REVERT
+        last_saved = data;
+
 
         // ------~~ APPLY SETTINGS TO WEBPAGE
         chrome.tabs.query(
@@ -140,9 +182,9 @@ document.addEventListener("DOMContentLoaded", function () {
             function (tabs) {
                 chrome.tabs.sendMessage(tabs[0].id, {
                     action: "set",
-                    title: title_el.value,
-                    send_focus: send_focus_el.checked,
-                    shortcut: shortcut_el.checked
+                    title: title_input.value,
+                    send_focus: focus_toggle.checked,
+                    shortcut: shortcut_toggle.checked
                 });
             }
         );
@@ -150,22 +192,34 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // ---------------------------------------------------------
-    // Click 'Reset'
+    // CLICK 'Reset'
     // ---------------------------------------------------------
-    resetButton.addEventListener("click", function (ele) {
-        // Reset active styling
-        toggleDisabled(resetButton, true);
-        toggleDisabled(saveButton, true);
-        toggleInactiveClass(title_el, false);
+    reset_button.addEventListener("click", function () {
+        status_text.innerHTML = 'All Reset!';
+        status_text.classList.remove('hidden');
 
-        // Reset settings
-        title_el.value = '';
-        send_focus_el.checked = false;
-        shortcut_el.checked = false;
+        // -------~~ RESET LAST SAVED 
+        last_saved = {
+            title: '',
+            send_focus: false,
+            shortcut: false
+        };
 
-        // ------~~ REMOVE DATA FROM CHROME
+        // -------~~ RESET STYLING AND DISABLED
+        revert_button.setAttribute('disabled', '');
+        toggleDisabled(reset_button, true);
+        toggleDisabled(save_button, true);
+        toggleInactiveClass(title_input, false);
+
+        // -------~~ RESET EXTENSION FORM FIELDS
+        title_input.value = '';
+        focus_toggle.checked = false;
+        shortcut_toggle.checked = false;
+
+        // ------~~ REMOVE DATA FROM SESSION STORAGE
         chrome.storage.session.remove(["sophie"]);
 
+        // ------~~ APPLY TO WEBPAGE 
         chrome.tabs.query(
             { active: true, currentWindow: true },
             function (tabs) {
@@ -173,4 +227,46 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         );
     });
+
+
+    // ---------------------------------------------------------
+    // CLICK 'Revert'
+    // ---------------------------------------------------------
+    revert_button.addEventListener("click", function () {
+        status_text.innerHTML = 'Reverted to last settings!';
+        status_text.classList.remove('hidden');
+
+        let { send_focus, title, shortcut } = last_saved;
+
+        // -------~~ RESET EXTENSION FORM FIELDS
+        title_input.value = title;
+        focus_toggle.checked = send_focus;
+        shortcut_toggle.checked = shortcut;
+
+        // -------~~ TOGGLE STYLE/ DISABLED
+        if (title !== '') {
+            toggleInactiveClass(title_input, true);
+        }
+        if (title !== '' || shortcut || send_focus) {
+            reset_button.removeAttribute('disabled');
+        } else {
+            reset_button.setAttribute('disabled', '');
+        }
+        save_button.setAttribute('disabled', '');
+        revert_button.setAttribute('disabled', '');
+
+        // -------~~ APPLY TO WEBPAGE
+        chrome.tabs.query(
+            { active: true, currentWindow: true },
+            function (tabs) {
+                chrome.tabs.sendMessage(tabs[0].id, {
+                    action: "set",
+                    title: title,
+                    send_focus: send_focus,
+                    shortcut: shortcut
+                });
+            }
+        );
+    });
+
 });

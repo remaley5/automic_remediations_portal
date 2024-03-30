@@ -20,12 +20,12 @@
     <!-- TOGGLE FORM INSTRUCTIONS -->
     <div class="checkbox field">
         <div class="label_cont">
-            <label for="instructions">Show Instructions</label>
-            <div class="description hidden" id="instructions_desc">Additional instructions for the purpose of each field
+            <label for="instructions_toggle">Show Instructions</label>
+            <div class="description hidden" id="instructions_toggle_desc">Additional instructions for the purpose of each field
                 is visible</div>
         </div>
         <div class="checkbox_cont">
-            <input type="checkbox" id="instructions" aria-describedby="instructions_desc">
+            <input type="checkbox" id="instructions_toggle" aria-describedby="instructions_toggle_desc">
             <div class="checkbox_style"></div>
         </div>
     </div>
@@ -34,61 +34,49 @@
         Remediation Settings
     </h2>
     <!-- <form aria-labelledby="remediation_settings_title"> -->
-        <!-- AUTOMIC REMEDIAITON FILENAME -->
-        <div class="text field">
-            <div class="label_cont">
-                <label for="automic_name">Filename Prefix</label>
-                <div class="description hidden" id="automic_name_desc">Enter text here that will be automatically filled
-                    in as
-                    the beginning of the filename when you open the 'Add New Remediation' dialog. </div>
-            </div>
-            <input id="automic_name" class="inactive" aria-describedby="automic_name_desc">
+    <!-- AUTOMIC REMEDIAITON FILENAME -->
+    <div class="text field">
+        <div class="label_cont">
+            <label for="automic_name">Filename Prefix</label>
+            <div class="description hidden" id="automic_name_desc">Enter text here that will be automatically filled
+                in as
+                the beginning of the filename when you open the 'Add New Remediation' dialog. </div>
         </div>
-        <!-- FOCUS AND SCROLL -->
-        <div class="checkbox field">
-            <div class="label_cont">
-                <label for="send_focus">Auto-Scroll & Focus</label>
-                <div class="description hidden" id="send_focus_desc">Enable to automatically scroll to newly
-                    saved files in the browser and direct keyboard focus to the accordion button which expands the
-                    new file.</div>
-            </div>
-            <div class="checkbox_cont">
-                <input type="checkbox" id="send_focus" aria-describedby="send_focus_desc">
-                <div class="checkbox_style"></div>
-            </div>
+        <input id="automic_name" class="inactive" aria-describedby="automic_name_desc">
+    </div>
+    <!-- FOCUS AND SCROLL -->
+    <div class="checkbox field">
+        <div class="label_cont">
+            <label for="focus_toggle">Auto-Scroll & Focus</label>
+            <div class="description hidden" id="focus_toggle_desc">Enable to automatically scroll to newly
+                saved files in the browser and direct keyboard focus to the accordion button which expands the
+                new file.</div>
         </div>
-        <!-- KEYBOARD SHORTCUT -->
-        <div class="checkbox field">
-            <div class="label_cont">
-                <label for="shortcut">Shortcut Key for New Remediation</label>
-                <div class="description hidden" id="shortcut_desc">Enable to use the shortcut key Control +
-                    Option + N to open the 'Add Manual Remediation' modal and create a new file.</div>
-            </div>
-            <div class="checkbox_cont">
-                <input type="checkbox" id="shortcut" aria-describedby="shortcut_desc">
-                <div class="checkbox_style"></div>
-            </div>
+        <div class="checkbox_cont">
+            <input type="checkbox" id="focus_toggle" aria-describedby="focus_toggle_desc">
+            <div class="checkbox_style"></div>
         </div>
-        <!-- SET & RESET -->
-        <div class="button_cont">
-            <button id="save_button" disabled class="inactive">Save </button>
-            <button id="reset_button" disabled class="inactive">Reset</button>
+    </div>
+    <!-- KEYBOARD shortcut -->
+    <div class="checkbox field">
+        <div class="label_cont">
+            <label for="shortcut_toggle">Shortcut Key for New Remediation</label>
+            <div class="description hidden" id="shortcut_toggle_desc">Enable to use the shortcut key Control +
+                Option + N to open the 'Add Manual Remediation' modal and create a new file.</div>
         </div>
+        <div class="checkbox_cont">
+            <input type="checkbox" id="shortcut_toggle" aria-describedby="shortcut_toggle_desc">
+            <div class="checkbox_style"></div>
+        </div>
+    </div>
+    <!-- SET & RESET -->
+    <div class="button_cont">
+        <button id="save_button" disabled class="inactive">Save </button>
+        <button id="reset_button" disabled class="inactive">Reset</button>
+        <button id="revert_button" disabled class="inactive">Revert</button>
+    </div>
+    <div id="status_text" role="alert" class="description hidden"></div>
     <!-- </form> -->
 </body>
 
 </html>
-
-<!--  
-    CHECKBOX
-    <div class="checkbox field">
-        <div class="label_cont">
-            <label for=""></label>
-            <div class="description hidden" id=""></div>
-        </div>
-        <div class="checkbox_cont">
-            <input type="checkbox" id="" aria-describedby="">
-            <div class="checkbox_style"></div>
-        </div>
-    </div> 
--->

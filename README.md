@@ -46,7 +46,7 @@
 - ~~Disable "reset" if the form is empty~~
 - ? Save for revert
 - Add a revert to last setting option
-- "Save" or "Reset" message
+- ~~"Save" or "Reset"  message~~
 - Fix issue where if you save it then it causes an error
 
 ### Content
